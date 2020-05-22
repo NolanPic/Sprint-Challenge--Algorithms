@@ -26,6 +26,7 @@ while f <= n:
 	drop_egg()
 	if egg is broken:
 		broken_from_floor = f
+        break
 	f = next floor up
 ```
 
@@ -33,11 +34,11 @@ The above pseudocode runs in O(n), where n is the number of stories. We move up 
 
 ### O(log n) Solution
 
-In this solution, more than one egg can be broken, but the number of dropped eggs could be much smaller than the O(n) solution.
+In this solution, more than one egg can be broken, but the number of dropped eggs could be much smaller than the O(n) solution if this is a really tall building.
 
 ```
 bottom = the first floor
-top = the top floor (n)
+top = the top floor (or n)
 
 while bottom <= top:
     # get the middle floor
@@ -49,12 +50,13 @@ while bottom <= top:
 
     else:
         # the egg did not break.
-        # this might be the correct floor, or we could still be
-        # too low. Drop an egg from one floor above THIS one
+        # the floor above might be the correct floor,
+        # or we could still be too low. Drop an egg
+        # from one floor above THIS one
 
         if egg_breaks_from_floor(mid_floor+1):
             # the egg broke from the floor above, but not
-            # THIS floor--we found the correct floor!
+            # THIS floor (mid_floor)--we found the correct floor!
             # return the floor above this one since that is
             # what we want,
 
@@ -68,4 +70,4 @@ while bottom <= top:
 
 ```
 
-The above pseudocode runs in O(log n). It is basically performing a binary search, but with one small difference where if an egg is not broken, it checks the floor above it to see if it breaks on that floor (which is itself an O(1) operation). If it breaks from the above floor, the above floor is the answer. If it doesn't, the search cuts the results in half and applies the same thing. Each iteration whittles the floors, or n, down by half.
+The above pseudocode runs in O(log n). It is basically performing a binary search, but it performs a check where if an egg is not broken on a given floor, it checks the floor above it to see if it breaks on that floor (which is itself an O(1) operation). If it breaks from the above floor, the above floor is the answer. If it doesn't, the search cuts the results in half and applies the same thing. Each iteration whittles the floors, or n, down by half.
